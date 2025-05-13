@@ -1,0 +1,89 @@
+<div class="container mt-5 p-4 bg-light rounded shadow">
+  <h2 class="text-center text-primary mb-4">Add New Train</h2>
+
+  <form [formGroup]="trainForm" (ngSubmit)="onSubmit()">
+    <!-- Basic Train Info -->
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label class="form-label">Train Name</label>
+        <input formControlName="TrainName" class="form-control" />
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Train Type</label>
+        <input formControlName="TrainType" class="form-control" />
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Total Seats</label>
+        <input formControlName="TotalSeats" type="number" class="form-control" />
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Running Days</label>
+        <input formControlName="RunningDays" class="form-control" />
+      </div>
+    </div>
+
+    <!-- Schedules -->
+    <div formArrayName="Schedules" class="mb-4">
+      <h5 class="text-secondary d-flex justify-content-between align-items-center">
+        Schedules
+        <button type="button" class="btn btn-sm btn-outline-primary" (click)="addSchedule()">Add Schedule</button>
+      </h5>
+      <div *ngFor="let schedule of schedules.controls; let i = index" [formGroupName]="i" class="border rounded p-3 mb-3 bg-white">
+        <div class="row g-3">
+          <div class="col-md-4">
+            <label class="form-label">Station ID</label>
+            <input formControlName="StationID" class="form-control" type="number"/>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Arrival Time</label>
+            <input formControlName="ArrivalTime" type="datetime-local" class="form-control" />
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Departure Time</label>
+            <input formControlName="DepartureTime" type="datetime-local" class="form-control" />
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Sequence Order</label>
+            <input formControlName="SequenceOrder" type="number" class="form-control" />
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Fare</label>
+            <input formControlName="Fair" type="number" class="form-control" />
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Distance From Source</label>
+            <input formControlName="DistanceFromSource" type="number" class="form-control" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Seat Availability -->
+    <div formArrayName="SeatAvailability" class="mb-4">
+      <h5 class="text-secondary d-flex justify-content-between align-items-center">
+        Seat Availability
+        <button type="button" class="btn btn-sm btn-outline-primary" (click)="addSeatAvailability()">Add Availability</button>
+      </h5>
+      <div *ngFor="let seat of seatAvailability.controls; let i = index" [formGroupName]="i" class="border rounded p-3 mb-3 bg-white">
+        <div class="row g-3">
+          <div class="col-md-4">
+            <label class="form-label">Date</label>
+            <input formControlName="Date" type="date" class="form-control" />
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Class Type ID</label>
+            <input formControlName="ClassTypeID" class="form-control" type="number" />
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Remaining Seats</label>
+            <input formControlName="RemainingSeats" type="number" class="form-control" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center">
+      <button type="submit" [disabled]="trainForm.invalid" class="btn btn-success px-4">Submit</button>
+    </div>
+  </form>
+</div>

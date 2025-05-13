@@ -1,0 +1,50 @@
+<nav class="navbar navbar-expand-lg bg-white border-bottom shadow-sm px-4 py-2">
+  <a class="navbar-brand d-flex align-items-center fw-bold text-primary fs-4" [routerLink]="isAdmin() ? '/admin' : '/user'">
+    <i class="bi bi-train-front-fill me-2"></i>
+    🚆RAILSAFAR
+  </a>
+
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-bs-toggle="collapse"
+    data-bs-target="#navbarContent"
+    aria-controls="navbarContent"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarContent">
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-4">
+      <li class="nav-item" *ngIf="!isAdmin()">
+        <a class="nav-link text-dark fw-medium" routerLink="/train-search">Train Search</a>
+      </li>
+      <li class="nav-item" *ngIf="isLoggedIn() && !isAdmin()">
+        <a class="nav-link text-dark fw-medium" routerLink="/my-bookings">My Bookings</a>
+      </li>
+      <li class="nav-item" *ngIf="isAdmin()">
+        <a class="nav-link text-dark fw-medium" routerLink="/add-train">Add Train</a>
+      </li>
+      <li class="nav-item" *ngIf="isAdmin()">
+        <a class="nav-link text-dark fw-medium" routerLink="/update-train">Update Train</a>
+      </li>
+      <li class="nav-item" *ngIf="isAdmin()">
+        <a class="nav-link text-dark fw-medium" routerLink="/station">All Stations</a>
+      </li>
+    </ul>
+
+    <div class="d-flex align-items-center">
+      <button *ngIf="isLoggedIn(); else loginBtn"
+              (click)="logout()"
+              class="btn btn-outline-primary rounded-pill me-2 px-4">
+        Logout
+      </button>
+
+      <ng-template #loginBtn>
+        <button (click)="login()" class="btn btn-primary rounded-pill px-4">Login</button>
+      </ng-template>
+    </div>
+  </div>
+</nav>

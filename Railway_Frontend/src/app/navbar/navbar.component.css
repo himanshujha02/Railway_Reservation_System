@@ -1,0 +1,44 @@
+/* .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 24px;
+    background-color: #003366; //dark blue
+    color: white;
+    font-family: Arial, sans-serif;
+  }
+  
+  .RailJourney {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .nav-link {
+    margin-left: 20px;
+    text-decoration: none;
+    color: white;
+    font-size: 1rem;
+  }
+  
+  .nav-link:hover {
+    text-decoration: underline;
+  }
+  
+  .auth-button {
+    margin-left: auto;
+  }
+  
+  .login-button, .logout-button {
+    background-color: #ffffff;
+    color: #003366;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-weight: bold;
+  }
+  
+  .login-button:hover, .logout-button:hover {
+    background-color: #cce0ff;
+  }
+   */

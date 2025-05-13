@@ -1,0 +1,129 @@
+<div class="container my-4">
+  <div class="row">
+
+    <!--  Left Section: Train List -->
+    <div class="col-md-4 border-end">
+      <h4 class="mb-3">Available Trains</h4>
+      <ul class="list-group">
+        <li 
+          *ngFor="let train of trainList; trackBy: trackByTrainId" 
+          class="list-group-item list-group-item-action"
+          [class.active]="train.trainID === selectedTrainId"
+          (click)="onTrainSelect(train)">
+          {{ train.trainName }}
+        </li>
+      </ul>
+    </div>
+
+    <!--  Right Section: Update Form -->
+    <div class="col-md-8">
+      <div class="p-3 border rounded shadow-sm bg-light">
+        <h4 class="mb-3">Update Train Details</h4>
+
+        <form [formGroup]="trainForm" (ngSubmit)="updateTrain()">
+
+          <!--  Train Details -->
+          <div class="card mb-4">
+            <div class="card-header bg-primary text-white">Train Information</div>
+            <div class="card-body row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Train Name</label>
+                <input class="form-control" formControlName="TrainName" placeholder="Enter Train Name" />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Train Type</label>
+                <input class="form-control" formControlName="TrainType" placeholder="e.g. Express, Superfast" />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Total Seats</label>
+                <input class="form-control" formControlName="TotalSeats" type="number" placeholder="Enter Total Seats" />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Running Days</label>
+                <input class="form-control" formControlName="RunningDays" placeholder="e.g. Mon, Tue, Wed" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Schedule Details -->
+          <div class="card mb-4">
+            <div class="card-header bg-info text-white">Schedules</div>
+            <div class="card-body" formArrayName="Schedules">
+              <div *ngFor="let schedule of schedules.controls; let i = index" [formGroupName]="i" class="row g-2 mb-3 border-bottom pb-2">
+                <div class="col-md-2">
+                  <label class="form-label">Station ID</label>
+                  <input class="form-control" formControlName="StationID" type="number" />
+                </div>
+                <div class="col-md-2">
+                  <label class="form-label">Arrival Time</label>
+                  <input class="form-control" formControlName="ArrivalTime" type="datetime-local" />
+                </div>
+                <div class="col-md-2">
+                  <label class="form-label">Departure Time</label>
+                  <input class="form-control" formControlName="DepartureTime" type="datetime-local" />
+                </div>
+                <div class="col-md-2">
+                  <label class="form-label">Sequence</label>
+                  <input class="form-control" formControlName="SequenceOrder" type="number" />
+                </div>
+                <div class="col-md-2">
+                  <label class="form-label">Fare</label>
+                  <input class="form-control" formControlName="Fair" type="number" />
+                </div>
+                <div class="col-md-2">
+                  <label class="form-label">Distance (km)</label>
+                  <input class="form-control" formControlName="DistanceFromSource" type="number" />
+                </div>
+                <div class="col-md-12 mt-2">
+                  <button type="button" class="btn btn-sm btn-outline-danger" (click)="removeSchedule(i)">Remove Schedule</button>
+                </div>
+              </div>
+              <button type="button" class="btn btn-outline-primary btn-sm" (click)="addSchedule()">+ Add Schedule</button>
+            </div>
+          </div>
+
+          <!--  Seat Availability -->
+          <div class="card mb-4">
+            <div class="card-header bg-success text-white">Seat Availability</div>
+            <div class="card-body" formArrayName="SeatAvailability">
+              <div *ngFor="let seat of seatAvailability.controls; let i = index" [formGroupName]="i" class="row g-2 mb-3 border-bottom pb-2">
+                <div class="col-md-4">
+                  <label class="form-label">Date</label>
+                  <input class="form-control" formControlName="Date" type="date" />
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Class Type ID</label>
+                  <input class="form-control" formControlName="ClassTypeID" type="number" />
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Remaining Seats</label>
+                  <input class="form-control" formControlName="RemainingSeats" type="number" />
+                </div>
+                <div class="col-md-12 mt-2">
+                  <button type="button" class="btn btn-sm btn-outline-danger" (click)="removeSeatAvailability(i)">Remove Seat</button>
+                </div>
+              </div>
+              <button type="button" class="btn btn-outline-primary btn-sm" (click)="addSeatAvailability()">+ Add Seat</button>
+            </div>
+          </div>
+
+         <div class="form-group">
+  <label for="adminMessage">Admin Message</label>
+  <textarea id="adminMessage"
+            class="form-control"
+            [(ngModel)]="adminMessage"
+            rows="3"
+            placeholder="Enter a message for the admin"></textarea>
+</div>
+
+
+          <!--  Submit -->
+          <div class="text-end">
+            <button type="submit" class="btn btn-success mt-2" [disabled]="!trainForm.valid">Update Train</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</div>

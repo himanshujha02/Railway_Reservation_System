@@ -1,0 +1,115 @@
+<div class="container d-flex justify-content-center align-items-center vh-100">
+  <div class="card p-4 shadow" style="min-width: 400px;">
+    <h3 class="text-center mb-3">Register</h3>
+
+    <form #form="ngForm" (ngSubmit)="register()" novalidate>
+      
+      <!-- Username -->
+      <div class="mb-3">
+        <label class="form-label">Username</label>
+        <input
+          [(ngModel)]="registerData.username"
+          name="username"
+          class="form-control"
+          placeholder="Enter username"
+          required
+          pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$"
+          #username="ngModel"
+        />
+        <div *ngIf="username.invalid && username.touched" class="text-danger small">
+          Username must be at least 6 characters and include letters and numbers.
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input
+          [(ngModel)]="registerData.email"
+          name="email"
+          type="email"
+          class="form-control"
+          placeholder="Enter email"
+          required
+          #email="ngModel"
+        />
+        <div *ngIf="email.invalid && email.touched" class="text-danger small">
+          Enter a valid email.
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div class="mb-3">
+        <label class="form-label">Password</label>
+        <input
+          [(ngModel)]="registerData.password"
+          name="password"
+          type="password"
+          class="form-control"
+          placeholder="Enter password"
+          required
+          minlength="6"
+          #password="ngModel"
+        />
+        <div *ngIf="password.invalid && password.touched" class="text-danger small">
+          Password must be at least 6 characters long.
+        </div>
+      </div>
+
+      <!-- Aadhar Number -->
+      <div class="mb-3">
+        <label class="form-label">Aadhar Number</label>
+        <input
+          [(ngModel)]="registerData.aadharNumber"
+          name="aadharNumber"
+          class="form-control"
+          placeholder="Enter 12-digit Aadhar number"
+          required
+          pattern="^\d{12}$"
+          #aadharNumber="ngModel"
+        />
+        <div *ngIf="aadharNumber.invalid && aadharNumber.touched" class="text-danger small">
+          Aadhar number must be 12 digits.
+        </div>
+      </div>
+
+      <!-- Role -->
+      <div class="mb-3">
+        <label class="form-label">Role</label>
+        <select
+          [(ngModel)]="registerData.role"
+          name="role"
+          class="form-select"
+          required
+          #role="ngModel"
+        >
+          <option value="" disabled selected>Select Role</option>
+          <option>User</option>
+          <option>Admin</option>
+        </select>
+      </div>
+
+      <!-- Admin Code (conditionally shown) -->
+      <div class="mb-3" *ngIf="registerData.role === 'Admin'">
+        <label class="form-label">Admin Code</label>
+        <input
+          [(ngModel)]="registerData.admincode"
+          name="admincode"
+          class="form-control"
+          placeholder="Enter admin code"
+          required
+          #admincode="ngModel"
+        />
+        <div *ngIf="admincode.invalid && admincode.touched" class="text-danger small">
+          Admin code is required.
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="d-grid mt-3">
+        <button type="submit" class="btn btn-success" [disabled]="form.invalid">Register</button>
+      </div>
+
+    </form>
+  </div>
+</div>

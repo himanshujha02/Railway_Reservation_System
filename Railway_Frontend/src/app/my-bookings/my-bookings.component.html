@@ -1,0 +1,100 @@
+<div *ngIf="alertMessage" class="alert alert-{{ alertType }} alert-dismissible fade show" role="alert">
+  {{ alertMessage }}
+  <button type="button" class="btn-close" aria-label="Close" (click)="alertMessage = ''"></button>
+</div>
+
+<div class="container mt-4" *ngIf="bookings.length > 0; else noBookings">
+  <div *ngFor="let ticket of bookings" class="card mb-4 border border-primary shadow-sm">
+    <div class="card-header bg-light d-flex justify-content-between align-items-center">
+      <div>
+        <h5 class="mb-0">{{ ticket.trainName }} ({{ ticket.trainNumber }})</h5>
+        <small class="text-muted">
+          {{ ticket.sourceStation }} ➜ {{ ticket.destinationStation }} | {{ ticket.journeyDate | date }}
+        </small>
+      </div>
+      <span class="badge bg-info text-dark">{{ ticket.status }}</span>
+    </div>
+
+    <div class="card-body">
+      <div class="row mb-2">
+        <div class="col-md-4"><strong>Class:</strong> {{ ticket.classType }}</div>
+        <div class="col-md-4"><strong>Fare:</strong> ₹{{ ticket.totalFare }}</div>
+      </div>
+
+      <div *ngIf="ticket.passengers && ticket.passengers.length > 0">
+        <h6 class="mt-3">Passenger Details</h6>
+        <table class="table table-sm table-bordered mt-2">
+          <thead class="table-light">
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Age</th>
+              <th>Gender</th>
+              <th>Seat Number</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let p of ticket.passengers; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ p.name }}</td>
+              <td>{{ p.age }}</td>
+              <td>{{ p.gender }}</td>
+              <td>{{ p.seatNumber }}</td>
+              <td>
+                <button
+                  class="btn btn-danger btn-sm"
+                  (click)="openDeleteModal(ticket, [p.passengerID])"
+                >
+                  Cancel Passenger Ticket
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Delete Ticket Button -->
+      <button
+        *ngIf="ticket.status === 'Booked'"
+        class="btn btn-danger mt-3"
+        (click)="openDeleteModal(ticket, getPassengerIds(ticket.passengers || []))"
+      >
+        Cancel Ticket
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- No bookings found -->
+<ng-template #noBookings>
+  <div class="text-center mt-5">
+    <h5>No bookings found</h5>
+    <p class="text-muted">Once you book a ticket, it will appear here.</p>
+  </div>
+</ng-template>
+
+<!-- Confirm Delete Modal -->
+<div *ngIf="showConfirmModal" class="modal fade show" style="display: block" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmDeleteModalLabel">Confirm Deletion</h5>
+        <!-- <button type="button" class="close" (click)="cancelModal()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button> -->
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete the selected ticket?</p>
+        <p *ngIf="refundAmount > 0">Refund Amount: ₹{{ refundAmount }}</p>
+        <!-- <p *ngIf="selectedPassengerIds.length === selectedTicket?.passengers?.length">
+          Deleting the entire ticket will also refund ₹{{ refundAmount }}.
+        </p> -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="cancelModal()">Cancel</button>
+        <button type="button" class="btn btn-danger" (click)="confirmDelete()">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>

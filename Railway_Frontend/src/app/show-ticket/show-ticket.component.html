@@ -1,0 +1,96 @@
+<div id="ticket-content" class="container my-5">
+    <div *ngIf="ticket" class="card shadow-lg p-4 border-primary">
+      <h2 class="text-center text-primary mb-4">E-Ticket Confirmation</h2>
+      
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <p><strong>Train:</strong> {{ ticket.trainName }} ({{ ticket.trainNumber }})</p>
+          <p><strong>From:</strong> {{ ticket.sourceStation }}</p>
+          <p><strong>To:</strong> {{ ticket.destinationStation }}</p>
+          <p><strong>Class:</strong> {{ ticket.classType }}</p>
+          <p><strong>Status:</strong> {{ ticket.status }}</p>
+        </div>
+        <div class="col-md-6 text-end">
+          <p><strong>Ticket ID:</strong> #{{ ticket.ticketID }}</p>
+          <p><strong>Booked By:</strong> {{ ticket.bookBy }}</p>
+          <p><strong>Departure:</strong> 
+            {{ ticket.departureTime | date:'yyyy-MM-dd' }} at 
+            {{ ticket.departureTime | date:'HH:mm' }}
+          </p>
+          <p><strong>Arrival:</strong> 
+            {{ ticket.arrivalTime | date:'yyyy-MM-dd' }} at 
+            {{ ticket.arrivalTime | date:'HH:mm' }}
+          </p>
+        </div>
+      </div>
+  
+      <hr />
+  
+      <h5 class="text-secondary mb-3">Passenger(s)</h5>
+      <div *ngFor="let p of ticket.passengers; let i = index" class="mb-2">
+        <div class="p-2 bg-light border rounded">
+          <strong>Passenger {{ i + 1 }}:</strong> 
+          {{ p.name }} ({{ p.gender }}, Age: {{ p.age }}) - Seat {{ p.seatNumber }}
+        </div>
+      </div>
+  
+      <hr />
+  
+      <div class="text-end">
+        <p><strong>Total Fare:</strong> ₹{{ ticket.totalFare }}</p>
+        <p *ngIf="ticket.hasInsurance"><strong>Insurance:</strong> ₹{{ ticket.insuranceAmount }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="container my-5">
+  <div *ngIf="ticket" class="card shadow-lg p-4 border-primary">
+    <h2 class="text-center text-primary mb-4">E-Ticket Confirmation</h2>
+    
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <p><strong>Train:</strong> {{ ticket.trainName }} ({{ ticket.trainNumber }})</p>
+        <p><strong>From:</strong> {{ ticket.sourceStation }}</p>
+        <p><strong>To:</strong> {{ ticket.destinationStation }}</p>
+        <p><strong>Class:</strong> {{ ticket.classType }}</p>
+        <p><strong>Status:</strong> {{ ticket.status }}</p>
+      </div>
+      <div class="col-md-6 text-end">
+        <p><strong>Ticket ID:</strong> #{{ ticket.ticketID }}</p>
+        <p><strong>Booked By:</strong> {{ ticket.bookBy }}</p>
+        <p><strong>Departure:</strong> 
+          {{ ticket.departureTime | date:'yyyy-MM-dd' }} at 
+          {{ ticket.departureTime | date:'HH:mm' }}
+        </p>
+        <p><strong>Arrival:</strong> 
+          {{ ticket.arrivalTime | date:'yyyy-MM-dd' }} at 
+          {{ ticket.arrivalTime | date:'HH:mm' }}
+        </p>
+      </div>
+    </div>
+
+    <hr />
+
+    <h5 class="text-secondary mb-3">Passenger(s)</h5>
+    <div *ngFor="let p of ticket.passengers; let i = index" class="mb-2">
+      <div class="p-2 bg-light border rounded">
+        <strong>Passenger {{ i + 1 }}:</strong> 
+        {{ p.name }} ({{ p.gender }}, Age: {{ p.age }}) - Seat {{ p.seatNumber }}
+      </div>
+    </div>
+
+    <hr />
+
+    <div class="text-end">
+      <p><strong>Total Fare:</strong> ₹{{ ticket.totalFare }}</p>
+      <p *ngIf="ticket.hasInsurance"><strong>Insurance:</strong> ₹{{ ticket.insuranceAmount }}</p>
+    </div>
+  </div>
+</div>
+<div class="d-flex justify-content-center mb-3">
+    <button class="btn btn-outline-primary px-4 py-2 rounded shadow" (click)="printTicket()">
+      <i class="bi bi-printer me-2"></i> Print / Download Ticket
+    </button>
+  </div>
+  
+  
+  

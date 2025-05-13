@@ -1,0 +1,55 @@
+<div class="container d-flex justify-content-center align-items-center " style="min-height: calc(100vh - 70px);">
+  <div class="card p-4 shadow" style="min-width: 350px;">
+    <h3 class="text-center mb-4">Login</h3>
+
+    <form #loginForm="ngForm" (ngSubmit)="login()">
+      <!-- Username -->
+      <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input
+          [(ngModel)]="loginData.username"
+          name="username"
+          id="username"
+          class="form-control"
+          placeholder="Enter your username"
+          required
+          #username="ngModel"
+        />
+        <div *ngIf="username.invalid && username.touched" class="text-danger small">
+          Username is required.
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input
+          [(ngModel)]="loginData.password"
+          name="password"
+          id="password"
+          type="password"
+          class="form-control"
+          placeholder="Enter your password"
+          required
+          #password="ngModel"
+        />
+        <div *ngIf="password.invalid && password.touched" class="text-danger small">
+          Password is required.
+        </div>
+      </div>
+
+      <!-- Login Button -->
+      <div class="d-grid">
+        <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid">
+          Login
+        </button>
+      </div>
+    </form>
+
+    <!-- Register Link -->
+    <p class="text-center mt-3 mb-0">
+      Don't have an account?
+      <a (click)="goToRegister()" style="cursor: pointer; color: #0d6efd;">Register here</a>
+    </p>
+  </div>
+</div>

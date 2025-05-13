@@ -1,0 +1,19 @@
+/* Ensure the entire page fills the screen */
+.page-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Takes up the full height of the viewport */
+  }
+  
+  .content {
+    flex: 1; /* This will take up all the available space between the navbar and footer */
+    
+  }
+  
+  .footer {
+    background-color: #f0f0f0;
+    padding: 1rem;
+    text-align: center;
+    /* Ensure it sticks to the bottom */
+  }
+  

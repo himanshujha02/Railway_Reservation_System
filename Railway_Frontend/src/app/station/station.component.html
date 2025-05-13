@@ -1,0 +1,63 @@
+<div class="container mt-5">
+    <h2 class="mb-4 text-primary text-center">🚉 Station Management</h2>
+  
+    <!-- Station List Table -->
+    <div class="table-responsive">
+      <table class="table table-hover table-bordered shadow-sm">
+        <thead class="bg-primary text-white">
+          <tr>
+            <th>ID</th>
+            <th>Station Name</th>
+            <th>Location</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let station of stations">
+            <td>{{ station.stationID }}</td>
+            <td>{{ station.stationName }}</td>
+            <td>{{ station.location }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <!-- Add Station Form -->
+    <div class="card mt-5 shadow-sm">
+      <div class="card-header bg-success text-white">
+        <h5 class="mb-0">➕ Add New Station</h5>
+      </div>
+      <div class="card-body">
+        <form (ngSubmit)="addStation()" class="row g-3 align-items-center">
+          <div class="col-md-5">
+            <input
+              type="text"
+              [(ngModel)]="newStation.stationName"
+              name="stationName"
+              class="form-control"
+              placeholder="Enter station name"
+              required
+            />
+          </div>
+          <div class="col-md-5">
+            <input
+              type="text"
+              [(ngModel)]="newStation.location"
+              name="location"
+              class="form-control"
+              placeholder="Enter location"
+              required
+            />
+          </div>
+          <div class="col-md-2">
+            <button type="submit" class="btn btn-success w-100">Add</button>
+          </div>
+        </form>
+  
+        <!-- Success Message -->
+        <div class="alert alert-success mt-3" *ngIf="successMessage">
+          {{ successMessage }}
+        </div>
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,79 @@
+<div class="container py-5">
+  <div class="card shadow-sm border-0">
+    <div class="card-header bg-primary text-white">
+      <h4 class="mb-0">Train Search</h4>
+    </div>
+    <div class="card-body">
+      <form (ngSubmit)="onSearch()" #trainSearchForm="ngForm">
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="sourceStation" class="form-label">Source Station</label>
+            <input type="text" id="sourceStation" name="source" class="form-control" [(ngModel)]="searchModel.sourceStationName" required placeholder="Enter source station">
+          </div>
+          <div class="col-md-6">
+            <label for="destinationStation" class="form-label">Destination Station</label>
+            <input type="text" id="destinationStation" name="destination" class="form-control" [(ngModel)]="searchModel.destinationStationName" required placeholder="Enter destination station">
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="travelDate" class="form-label">Travel Date</label>
+            <input type="date" id="travelDate" name="travelDate" class="form-control" [(ngModel)]="searchModel.travelDate" required>
+          </div>
+          <div class="col-md-6">
+            <label for="classType" class="form-label">Class Type</label>
+            <select id="classType" name="classTypeID" class="form-select" [(ngModel)]="searchModel.classTypeID" >
+              
+              <option value="2">AC First Class</option>
+              <option value="3">Sleeper</option>
+              <option value="4">General</option>
+            </select>
+          </div>
+        </div>
+        <div class="d-grid">
+          <button type="submit" class="btn btn-primary" [disabled]="trainSearchForm.invalid">Search</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div *ngIf="trainResults.length > 0; else noResults" class="mt-5">
+    <h5>Search Results</h5>
+    <div *ngFor="let train of trainResults" class="card mb-3">
+      <div class="card-body">
+        <h6 class="card-title">{{ train.trainName }} ({{ train.trainID }})</h6>
+        <p class="card-text">{{ train.sourceStationName }} &rarr; {{ train.destinationStationName }}</p>
+        <p class="card-text">
+          <strong>Departure:</strong> {{ train.departureTime | date:'shortTime' }} |
+          <strong>Arrival:</strong> {{ train.arrivalTime | date:'shortTime' }}
+        </p>
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Class</th>
+                <th>Available Seats</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let seat of train.seatAvailabilities">
+                <td>{{ seat.className }}</td>
+                <td>{{ seat.availableSeats }}</td>
+                <td>
+                  <button class="btn btn-success btn-sm" (click)="bookTicket(train.trainID, train.trainName, train.sourceStationID, train.destinationStationID, seat.classTypeID, seat.className, train.arrivalTime, train.departureTime)">Book Ticket</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #noResults>
+    <div *ngIf="searchAttempted" class="alert alert-warning mt-4">
+      No trains found for your search criteria.
+    </div>
+  </ng-template>
+</div>
